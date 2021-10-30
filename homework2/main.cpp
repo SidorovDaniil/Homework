@@ -4,13 +4,13 @@
 #include <string>
 #include <fstream>
 
-std::vector<double> ReadFile(std::string path){
+std::vector<double> ReadFile(std::string File){
 
     std::vector<double> coords;
     std::vector<std::string> points;
 
     std::ifstream fin;
-    fin.open(path);
+    fin.open(File);
 
     if (fin.is_open()){
         std::string str;
@@ -74,111 +74,116 @@ std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,
 
 int main(int argc,char** argv) {
 
-    std::string path = "in.txt";
-    std::vector<double> ALL = ReadFile(path);
+    if(argc == 2) {
 
-    double h = ALL[0];
-    double vx = ALL[1];
-    double vy = ALL[2];
-    double g = 9.81;
+        std::vector<double> ALL = ReadFile(argv[1]);
 
-//    std::cout << "h = " << h << " vx = " << vx << " vy = " << vy << std::endl;
-    ALL.erase(ALL.begin() + 0);
-    ALL.erase(ALL.begin() + 0);
-    ALL.erase(ALL.begin() + 0);
+        double h = ALL[0];
+        double vx = ALL[1];
+        double vy = ALL[2];
+        double g = 9.81;
 
-    std::string way = "Right";//начальное направление движения
+//        std::cout << "h = " << h << " vx = " << vx << " vy = " << vy << std::endl;
+        ALL.erase(ALL.begin() + 0);
+        ALL.erase(ALL.begin() + 0);
+        ALL.erase(ALL.begin() + 0);
 
-    int n = 0;//счетчик для рекурсии
-    int n_p = 0;// Номер перегородки от которой мы отразились
+        std::string way = "Right";//начальное направление движения
 
-    std::vector<double> Y_true;// Y координата мячика
-    std::vector<double> Y_per;//Y координата перегородки
-    std::vector<double> X_per;//X координата перегородки
-    std::vector<double> X_rec;//X координата перегородок, от которых мячик отразися
+        int n = 0;//счетчик для рекурсии
+        int n_p = 0;// Номер перегородки от которой мы отразились
 
-    X_per = XorY(ALL,1);
-    Y_per = XorY(ALL,2);
+        std::vector<double> Y_true;// Y координата мячика
+        std::vector<double> Y_per;//Y координата перегородки
+        std::vector<double> X_per;//X координата перегородки
+        std::vector<double> X_rec;//X координата перегородок, от которых мячик отразися
 
-//    for (int i = 0; i<X_per.size();i++){
-//        std::cout << "X_per= " << X_per[i] << "Y_per = " << Y_per[i] << std::endl;
-//    }
+        X_per = XorY(ALL,1);
+        Y_per = XorY(ALL,2);
 
-    for(int i = 0; i < X_per.size(); i++){
-//        std:: cout <<"coords X and Y is (" << X_per[i] << ", " << coords(X_per,vx,vy,h,g,n,X_rec)[i]<< ")" <<std::endl;
-        Y_true.push_back(coords(X_per,vx,vy,h,g,n,X_rec)[i]);
-    }
+//        for (int i = 0; i<X_per.size();i++){
+//            std::cout << "X_per= " << X_per[i] << "Y_per = " << Y_per[i] << std::endl;
+//        }
 
-//Первое столкновение
-    for(int i = 0; i<X_per.size(); i++){
-        if(Y_true[i] < Y_per[i]){
-            n_p = i;
-            way = "Left";
-            n++;
-            X_rec.push_back(X_per[i]);
-            break;
+        for(int i = 0; i < X_per.size(); i++){
+//            std:: cout <<"coords X and Y is (" << X_per[i] << ", " << coords(X_per,vx,vy,h,g,n,X_rec)[i]<< ")" <<std::endl;
+            Y_true.push_back(coords(X_per,vx,vy,h,g,n,X_rec)[i]);
         }
-    }
 
-    if(way == "Right"){
-        std::cout << "<" << X_per.size() << ">";
-        return 0;
-    }
-
-//    std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
-
-    while(true){
-        if(way == "Left"){
-            Y_true = coords(X_per,vx,vy,h,g,n,X_rec);
-            for(int i = n_p - 1; i >= 0; i--){
-
-                if (Y_true[i] <= Y_per[i]){
-//                    std::cout << "dvgalis vpravo";
-//                    std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
-                    n_p = i;
-                    way = "Right";
-                    n++;
-                    X_rec.push_back(X_per[i]);
-                    break;
-                }
-            }
-
-            if(Y_true[n_p] < 0){
-                std::cout << "<" << n_p+1 << ">";
-                return 0;
-            }
-
-            if(way == "Left"){
-                std::cout << "<" << 0 << ">";
-                return 0;
+    //Первое столкновение
+        for(int i = 0; i<X_per.size(); i++){
+            if(Y_true[i] < Y_per[i]){
+                n_p = i;
+                way = "Left";
+                n++;
+                X_rec.push_back(X_per[i]);
+                break;
             }
         }
 
         if(way == "Right"){
-            Y_true = coords(X_per,vx,vy,h,g,n,X_rec);
-            for(int i = n_p + 1 ; i < X_per.size(); i++){
+            std::cout << "<" << X_per.size() << ">";
+            return 0;
+        }
 
-                if (Y_true[i] <= Y_per[i]){
-//                    std::cout << "dvgalis vpravo";
-//                    std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
-                    n_p = i;
-                    way = "Left";
-                    n++;
-                    X_rec.push_back(X_per[i]);
-                    break;
+//        std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
+
+        while(true){
+            if(way == "Left"){
+                Y_true = coords(X_per,vx,vy,h,g,n,X_rec);
+                for(int i = n_p - 1; i >= 0; i--){
+
+                    if (Y_true[i] <= Y_per[i]){
+//                        std::cout << "dvgalis vpravo";
+//                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
+                        n_p = i;
+                        way = "Right";
+                        n++;
+                        X_rec.push_back(X_per[i]);
+                        break;
+                    }
+                }
+
+                if(Y_true[n_p] < 0){
+                    std::cout << "<" << n_p+1 << ">";
+                    return 0;
+                }
+
+                if(way == "Left"){
+                    std::cout << "<" << 0 << ">";
+                    return 0;
                 }
             }
 
-            if(Y_true[n_p] < 0){
-                std::cout << "<" << n_p << ">";
-                return 0;
-            }
-
             if(way == "Right"){
-                std::cout << "<" << X_per.size() << ">";
-                return 0;
+                Y_true = coords(X_per,vx,vy,h,g,n,X_rec);
+                for(int i = n_p + 1 ; i < X_per.size(); i++){
+
+                    if (Y_true[i] <= Y_per[i]){
+//                        std::cout << "dvgalis vpravo";
+//                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
+                        n_p = i;
+                        way = "Left";
+                        n++;
+                        X_rec.push_back(X_per[i]);
+                        break;
+                    }
+                }
+
+                if(Y_true[n_p] < 0){
+                    std::cout << "<" << n_p << ">";
+                    return 0;
+                }
+
+                if(way == "Right"){
+                    std::cout << "<" << X_per.size() << ">";
+                    return 0;
+                }
             }
         }
+    } else {
+        std::cerr << "No file" << std::endl;
+        return 1;
     }
 //    std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
 }
