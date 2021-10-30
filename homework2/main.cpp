@@ -80,7 +80,7 @@ int main(int argc,char** argv) {
     double h = ALL[0];
     double vx = ALL[1];
     double vy = ALL[2];
-    double g = 10;
+    double g = 9.81;
 
 //    std::cout << "h = " << h << " vx = " << vx << " vy = " << vy << std::endl;
     ALL.erase(ALL.begin() + 0);
