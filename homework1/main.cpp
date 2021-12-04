@@ -8,17 +8,20 @@ int main(){
     std::ifstream fin;
     fin.open(path);
 
-//    if (fin.is_open()) {
-//        double str;
-//
-//        while (!fin.eof()) {
-//
-//            fin >> str;
-//            std::cout << str << std::endl;
-//        }
-//    }
-    std::cout << "Leftmost: 0 0" << std::endl;
-    std::cout << "Rightmost 0 0";
+    if (fin.is_open()) {
+        double str;
+
+        while (!fin.eof()) {
+
+            fin >> str;
+            std::cout << str << std::endl;
+        }
+    }
+    else{
+        std::cout<< "No file";
+    }
+    std::cout << "Leftmost: "<< 0 << " " << 0 <<std::endl;
+    std::cout << "Rightmost: " << 0 << " " << 0 <<std::endl;
 
 
     return 0;
