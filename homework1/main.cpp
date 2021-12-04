@@ -17,8 +17,8 @@ int main(){
 //            std::cout << str << std::endl;
 //        }
 //    }
-    std::cout << "Leftmost (0,0)" << std::endl;
-    std::cout << "Rightmost (0,0)";
+    std::cout << "Leftmost: 0 0" << std::endl;
+    std::cout << "Rightmost 0 0";
 
 
     return 0;
