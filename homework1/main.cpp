@@ -13,12 +13,12 @@ int main(){
     double y0;
 
     //пара чисел, находящихся слева
-    double x_left;
-    double y_left;
+    double x_left = 0;
+    double y_left = 0;
 
     //пара чисел, находящихся справа
-    double x_right;
-    double y_right;
+    double x_right = 0;
+    double y_right = 0;
 
     //Переменные, содержащие ответ на задачу
     double max_x_r = 0;
