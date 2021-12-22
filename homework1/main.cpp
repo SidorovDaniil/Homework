@@ -48,13 +48,12 @@ int main(){
 //        std::cout << "x0 = " << x0 << std::endl;
 //        std::cout << "y0 = " << y0 << std::endl;
 
-//        norm1 = sqrt(x0 * x0 + y0 * y0);
-        norm1 = 1;
+        norm1 = sqrt(x0 * x0 + y0 * y0);
+
         while (!fin.eof()){
             fin >> x1;
             fin >> y1;
-//            norm2 = sqrt(x1 * x1 + y1 * y1);
-                norm2 = 1;
+            norm2 = sqrt(x1 * x1 + y1 * y1);
 //            std::cout << "x1 = " << x1 << " y1 = " << y1 << std::endl;
 //            std::cout << "norm2= " << norm2 <<std::endl;
 
@@ -66,7 +65,7 @@ int main(){
                     y_right = y1;
 
                     angle_r = (x0 * x1 + y0 * y1)/(norm1 * norm2);
-
+                    angle_r = round(angle_r*10000000)/10000000;
 //                    std::cout << "this point right "<<std::endl;
 
 //                    std::cout << "angleR= " << angle_r <<std::endl;
@@ -77,7 +76,7 @@ int main(){
                     y_left = y1;
 
                     angle_l = (x0 * x1 + y0 * y1)/(norm1 * norm2);
-
+                    angle_l = round(angle_l*10000000)/10000000;
 //                    std::cout << "this point left "<<std::endl;
 //
 //                    std::cout << "angleL= " << angle_l <<std::endl;
@@ -91,7 +90,7 @@ int main(){
                     y_right = y1;
 
                     angle_r = (x0 * x1 + y0 * y1)/(norm1 * norm2);
-
+                    angle_r = round(angle_r*10000000)/10000000;
 //                    std::cout << "this point right "<<std::endl;
 //                    std::cout << "angleR= " << angle_r <<std::endl;
                 }
@@ -101,7 +100,7 @@ int main(){
                     y_left = y1;
 
                     angle_l = (x0 * x1 + y0 * y1)/(norm1 * norm2);
-
+                    angle_l = round(angle_l*10000000)/10000000;
 //                    std::cout << "this point left "<<std::endl;
 //                    std::cout << "angleL= " << angle_l <<std::endl;
 
