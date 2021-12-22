@@ -48,12 +48,13 @@ int main(){
 //        std::cout << "x0 = " << x0 << std::endl;
 //        std::cout << "y0 = " << y0 << std::endl;
 
-        norm1 = sqrt(x0 * x0 + y0 * y0);
-
+//        norm1 = sqrt(x0 * x0 + y0 * y0);
+        norm1 = 1;
         while (!fin.eof()){
             fin >> x1;
             fin >> y1;
-            norm2 = sqrt(x1 * x1 + y1 * y1);
+//            norm2 = sqrt(x1 * x1 + y1 * y1);
+                norm2 = 1;
 //            std::cout << "x1 = " << x1 << " y1 = " << y1 << std::endl;
 //            std::cout << "norm2= " << norm2 <<std::endl;
 
@@ -115,6 +116,7 @@ int main(){
             }
 
             if (angle_l <= angleL0){
+
                 angleL0 = angle_l;
                 max_x_l = x_left;
                 max_y_l = y_left;
