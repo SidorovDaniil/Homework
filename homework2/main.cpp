@@ -74,7 +74,7 @@ std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,
 
 int main(int argc,char** argv) {
 
-    if(argc == 2) {
+    if (argc == 2) {
 //        std::cout << "1st argument: " << argv[1] << std::endl;
 
         std::vector<double> ALL = ReadFile(argv[1]);
@@ -99,21 +99,21 @@ int main(int argc,char** argv) {
         std::vector<double> X_per;//X координата перегородки
         std::vector<double> X_rec;//X координата перегородок, от которых мячик отразися
 
-        X_per = XorY(ALL,1);
-        Y_per = XorY(ALL,2);
+        X_per = XorY(ALL, 1);
+        Y_per = XorY(ALL, 2);
 
 //        for (int i = 0; i<X_per.size();i++){
 //            std::cout << "X_per= " << X_per[i] << "Y_per = " << Y_per[i] << std::endl;
 //        }
 
-        for(int i = 0; i < X_per.size(); i++){
+        for (int i = 0; i < X_per.size(); i++) {
 //            std:: cout <<"coords X and Y is (" << X_per[i] << ", " << coords(X_per,vx,vy,h,g,n,X_rec)[i]<< ")" <<std::endl;
-            Y_true.push_back(coords(X_per,vx,vy,h,g,n,X_rec)[i]);
+            Y_true.push_back(coords(X_per, vx, vy, h, g, n, X_rec)[i]);
         }
 
-    //Первое столкновение
-        for(int i = 0; i<X_per.size(); i++){
-            if(Y_true[i] < Y_per[i]){
+        //Первое столкновение
+        for (int i = 0; i < X_per.size(); i++) {
+            if (Y_true[i] < Y_per[i]) {
                 n_p = i;
                 way = 0;
                 n++;
@@ -123,7 +123,7 @@ int main(int argc,char** argv) {
             }
         }
 
-        if(way == 1){
+        if (way == 1) {
             std::cout << X_per.size(); //ans
             return 0;
         }
@@ -131,12 +131,12 @@ int main(int argc,char** argv) {
 //        std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
 //        std::cout << "new vx";
 //        std::cout << "new Left = 0 and rght = 1";
-        while(true){
-            if(way == 0){
-                Y_true = coords(X_per,vx,vy,h,g,n,X_rec);
-                for(int i = n_p - 1; i >= 0; i--){
+        while (true) {
+            if (way == 0) {
+                Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
+                for (int i = n_p - 1; i >= 0; i--) {
 
-                    if (Y_true[i] <= Y_per[i]){
+                    if (Y_true[i] <= Y_per[i]) {
 //                        std::cout << "dvgalis vpravo";
 //                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
                         n_p = i;
@@ -148,22 +148,22 @@ int main(int argc,char** argv) {
                     }
                 }
 
-                if(Y_true[n_p] < 0){
-                    std::cout << n_p+1; //ans
+                if (Y_true[n_p] < 0) {
+                    std::cout << n_p + 1; //ans
                     return 0;
                 }
 
-                if(way == 0){
+                if (way == 0) {
                     std::cout << 0; //ans
                     return 0;
                 }
             }
 
-            if(way == 1){
-                Y_true = coords(X_per,vx,vy,h,g,n,X_rec);
-                for(int i = n_p + 1 ; i < X_per.size(); i++){
+            if (way == 1) {
+                Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
+                for (int i = n_p + 1; i < X_per.size(); i++) {
 
-                    if (Y_true[i] <= Y_per[i]){
+                    if (Y_true[i] <= Y_per[i]) {
 //                        std::cout << "dvgalis vpravo";
 //                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
                         n_p = i;
@@ -175,13 +175,13 @@ int main(int argc,char** argv) {
                     }
                 }
 
-                if(Y_true[n_p] < 0){
+                if (Y_true[n_p] < 0) {
                     std::cout << n_p; //ans
                     return 0;
                 }
 
-                if(way == 1){
-                    std::cout <<X_per.size(); //ans
+                if (way == 1) {
+                    std::cout << X_per.size(); //ans
                     return 0;
                 }
             }
@@ -192,4 +192,5 @@ int main(int argc,char** argv) {
 //        return 1;
 //    }
 //    std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
+    }
 }
