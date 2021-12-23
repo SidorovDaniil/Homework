@@ -75,7 +75,7 @@ std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,
 int main(int argc,char** argv) {
 
     if(argc == 2) {
-        std::cout << "1st argument: " << argv[1] << std::endl;
+//        std::cout << "1st argument: " << argv[1] << std::endl;
 
         std::vector<double> ALL = ReadFile(argv[1]);
 
