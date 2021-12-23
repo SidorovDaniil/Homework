@@ -89,7 +89,7 @@ int main(int argc,char** argv) {
         ALL.erase(ALL.begin() + 0);
         ALL.erase(ALL.begin() + 0);
 
-        std::string way = "Right";//начальное направление движения
+        double way = 1;//начальное направление движения
 
         int n = 0;//счетчик для рекурсии
         int n_p = 0;// Номер перегородки от которой мы отразились
@@ -115,7 +115,7 @@ int main(int argc,char** argv) {
         for(int i = 0; i<X_per.size(); i++){
             if(Y_true[i] < Y_per[i]){
                 n_p = i;
-                way = "Left";
+                way = 0;
                 n++;
                 X_rec.push_back(X_per[i]);
                 vx = -vx;
@@ -123,15 +123,16 @@ int main(int argc,char** argv) {
             }
         }
 
-        if(way == "Right"){
+        if(way == 1){
             std::cout << X_per.size(); //ans
             return 0;
         }
 
 //        std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
 //        std::cout << "new vx";
+//        std::cout << "new Left = 0 and rght = 1";
         while(true){
-            if(way == "Left"){
+            if(way == 0){
                 Y_true = coords(X_per,vx,vy,h,g,n,X_rec);
                 for(int i = n_p - 1; i >= 0; i--){
 
@@ -139,7 +140,7 @@ int main(int argc,char** argv) {
 //                        std::cout << "dvgalis vpravo";
 //                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
                         n_p = i;
-                        way = "Right";
+                        way = 1;
                         n++;
                         X_rec.push_back(X_per[i]);
                         vx = -vx;
@@ -152,13 +153,13 @@ int main(int argc,char** argv) {
                     return 0;
                 }
 
-                if(way == "Left"){
+                if(way == 0){
                     std::cout << 0; //ans
                     return 0;
                 }
             }
 
-            if(way == "Right"){
+            if(way == 1){
                 Y_true = coords(X_per,vx,vy,h,g,n,X_rec);
                 for(int i = n_p + 1 ; i < X_per.size(); i++){
 
@@ -166,7 +167,7 @@ int main(int argc,char** argv) {
 //                        std::cout << "dvgalis vpravo";
 //                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
                         n_p = i;
-                        way = "Left";
+                        way = 0;
                         n++;
                         X_rec.push_back(X_per[i]);
                         vx = -vx;
@@ -179,7 +180,7 @@ int main(int argc,char** argv) {
                     return 0;
                 }
 
-                if(way == "Right"){
+                if(way == 1){
                     std::cout <<X_per.size(); //ans
                     return 0;
                 }
