@@ -64,7 +64,7 @@ std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,
     std::vector<double> Y;
 
     for(int i = 0; i < X.size(); i++){
-        double a = h + pow(-1,n)*(X[i]-recurs(recX,n))*vy/vx - pow((X[i]-recurs(recX,n)),2)*g/(2*pow(vx,2));
+        double a = h + (X[i]-recurs(recX,n))*vy/vx - pow((X[i]-recurs(recX,n)),2)*g/(2*pow(vx,2));
         Y.push_back(a);
     }
     return Y;
@@ -118,17 +118,18 @@ int main(int argc,char** argv) {
                 way = "Left";
                 n++;
                 X_rec.push_back(X_per[i]);
+                vx = -vx;
                 break;
             }
         }
 
         if(way == "Right"){
-            std::cout << X_per.size(); // ans
+            std::cout << X_per.size(); //ans
             return 0;
         }
 
 //        std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
-
+//        std::cout << "new vx";
         while(true){
             if(way == "Left"){
                 Y_true = coords(X_per,vx,vy,h,g,n,X_rec);
@@ -141,6 +142,7 @@ int main(int argc,char** argv) {
                         way = "Right";
                         n++;
                         X_rec.push_back(X_per[i]);
+                        vx = -vx;
                         break;
                     }
                 }
@@ -151,7 +153,7 @@ int main(int argc,char** argv) {
                 }
 
                 if(way == "Left"){
-                    std::cout <<  0 ; // ans
+                    std::cout << 0; //ans
                     return 0;
                 }
             }
@@ -167,21 +169,23 @@ int main(int argc,char** argv) {
                         way = "Left";
                         n++;
                         X_rec.push_back(X_per[i]);
+                        vx = -vx;
                         break;
                     }
                 }
 
                 if(Y_true[n_p] < 0){
-                    std::cout <<  n_p; // ans
+                    std::cout << n_p; //ans
                     return 0;
                 }
 
                 if(way == "Right"){
-                    std::cout <<X_per.size(); // ans
+                    std::cout <<X_per.size(); //ans
                     return 0;
                 }
             }
         }
+
     } else {
         std::cerr << "No file" << std::endl;
         return 1;
