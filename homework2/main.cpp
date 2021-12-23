@@ -187,9 +187,9 @@ int main(int argc,char** argv) {
             }
         }
 
-    } else {
-        std::cerr << "No file" << std::endl;
-        return 1;
-    }
+//    } else {
+//        std::cerr << "No file" << std::endl;
+//        return 1;
+//    }
 //    std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
 }
