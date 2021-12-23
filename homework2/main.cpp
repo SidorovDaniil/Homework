@@ -123,7 +123,7 @@ int main(int argc,char** argv) {
         }
 
         if(way == "Right"){
-            std::cout << "<" << X_per.size() << ">";
+            std::cout << X_per.size(); // ans
             return 0;
         }
 
@@ -146,12 +146,12 @@ int main(int argc,char** argv) {
                 }
 
                 if(Y_true[n_p] < 0){
-                    std::cout << "<" << n_p+1 << ">";
+                    std::cout << n_p+1; //ans
                     return 0;
                 }
 
                 if(way == "Left"){
-                    std::cout << "<" << 0 << ">";
+                    std::cout <<  0 ; // ans
                     return 0;
                 }
             }
@@ -172,12 +172,12 @@ int main(int argc,char** argv) {
                 }
 
                 if(Y_true[n_p] < 0){
-                    std::cout << "<" << n_p << ">";
+                    std::cout <<  n_p; // ans
                     return 0;
                 }
 
                 if(way == "Right"){
-                    std::cout << "<" << X_per.size() << ">";
+                    std::cout <<X_per.size(); // ans
                     return 0;
                 }
             }
