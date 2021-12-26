@@ -3,7 +3,7 @@
 #include <cmath>
 #include <string>
 #include <fstream>
-#include <typeinfo>
+
 std::vector<double> ReadFile(std::string File){
 
     std::vector<double> coords;
@@ -124,7 +124,6 @@ int main(int argc,char** argv) {
         }
 
         if (vx > 0) {
-            std::cout << typeid(X_per.size()).name()   << std::endl;
             std::cout << X_per.size(); //ans
             return 0;
         }
@@ -150,13 +149,11 @@ int main(int argc,char** argv) {
                 }
 
                 if (Y_true[n_p] < 0) {
-                    std::cout << typeid(n_p + 1).name()   << std::endl;
                     std::cout << n_p + 1; //ans
                     return 0;
                 }
 
                 if (vx < 0) {
-                    std::cout << typeid(0).name()   << std::endl;
                     std::cout << 0; //ans
                     return 0;
                 }
@@ -179,13 +176,11 @@ int main(int argc,char** argv) {
                 }
 
                 if (Y_true[n_p] < 0) {
-                    std::cout << typeid(n_p).name()   << std::endl;
                     std::cout << n_p; //ans
                     return 0;
                 }
 
                 if (vx > 0) {
-                    std::cout << typeid(X_per.size()).name()   << std::endl;
                     std::cout << X_per.size(); //ans
                     return 0;
                 }
