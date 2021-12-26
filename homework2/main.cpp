@@ -112,55 +112,28 @@ int main(int argc,char** argv) {
         }
 
         //Первое столкновение
-        for (int i = 0; i < X_per.size(); i++) {
-            if (Y_true[i] < Y_per[i]) {
-                n_p = i;
-                way = 0;
-                n++;
-                X_rec.push_back(X_per[i]);
-                vx = -vx;
-                break;
-            }
-        }
-
-        if (vx > 0) {
-            std::cout << X_per.size(); //ans
-            return 0;
-        }
+//        for (int i = 0; i < X_per.size(); i++) {
+//            if (Y_true[i] < Y_per[i]) {
+//                n_p = i;
+//                way = 0;
+//                n++;
+//                X_rec.push_back(X_per[i]);
+//                vx = -vx;
+//                break;
+//            }
+//        }
+//
+//        if (vx > 0) {
+//            std::cout << X_per.size(); //ans
+//            return 0;
+//        }
 
 //        std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
 //        std::cout << "new vx";
 //        std::cout << "new Left = 0 and rght = 1";
-        while (true) {
-
-
-            if (vx > 0) {
-                Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
-                for (int i = n_p + 1; i < X_per.size(); i++) {
-
-                    if (Y_true[i] <= Y_per[i]) {
-//                        std::cout << "dvgalis vpravo";
-//                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
-                        n_p = i;
-                        way = 0;
-                        n++;
-                        X_rec.push_back(X_per[i]);
-                        vx = -vx;
-                        break;
-                    }
-                }
-
-                if (Y_true[n_p] < 0) {
-                    std::cout << n_p; //ans
-                    return 0;
-                }
-
-                if (vx > 0) {
-                    std::cout << X_per.size(); //ans
-                    return 0;
-                }
-            }
-        }
+//        while (true) {
+//
+//        }
 
 //    } else {
 //        std::cerr << "No file" << std::endl;
