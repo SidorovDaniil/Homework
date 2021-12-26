@@ -132,32 +132,7 @@ int main(int argc,char** argv) {
 //        std::cout << "new vx";
 //        std::cout << "new Left = 0 and rght = 1";
         while (true) {
-            if (vx < 0) {
-                Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
-                for (int i = n_p - 1; i >= 0; i--) {
 
-                    if (Y_true[i] <= Y_per[i]) {
-//                        std::cout << "dvgalis vpravo";
-//                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
-                        n_p = i;
-                        way = 1;
-                        n++;
-                        X_rec.push_back(X_per[i]);
-                        vx = -vx;
-                        break;
-                    }
-                }
-
-                if (Y_true[n_p] < 0) {
-                    std::cout << n_p + 1; //ans
-                    return 0;
-                }
-
-                if (vx < 0) {
-                    std::cout << 10; //ans
-                    return 0;
-                }
-            }
 
             if (vx > 0) {
                 Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
