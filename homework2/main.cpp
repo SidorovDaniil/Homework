@@ -112,21 +112,21 @@ int main(int argc,char** argv) {
         }
 
         //Первое столкновение
-//        for (int i = 0; i < X_per.size(); i++) {
-//            if (Y_true[i] < Y_per[i]) {
-//                n_p = i;
-//                way = 0;
-//                n++;
-//                X_rec.push_back(X_per[i]);
-//                vx = -vx;
-//                break;
-//            }
-//        }
-//
-//        if (vx > 0) {
-//            std::cout << X_per.size(); //ans
-//            return 0;
-//        }
+        for (int i = 0; i < X_per.size(); i++) {
+            if (Y_true[i] < Y_per[i]) {
+                n_p = i;
+                way = 0;
+                n++;
+                X_rec.push_back(X_per[i]);
+                vx = -vx;
+                break;
+            }
+        }
+
+        if (vx > 0) {
+            std::cout << X_per.size(); //ans
+            return 0;
+        }
 
 //        std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
 //        std::cout << "new vx";
