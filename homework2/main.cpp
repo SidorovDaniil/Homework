@@ -132,7 +132,7 @@ int main(int argc,char** argv) {
 //        std::cout << "new vx";
 //        std::cout << "new Left = 0 and rght = 1";
         while (true) {
-            if (way == 0) {
+            if (vx < 0) {
                 Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
                 for (int i = n_p - 1; i >= 0; i--) {
 
@@ -153,13 +153,13 @@ int main(int argc,char** argv) {
                     return 0;
                 }
 
-                if (way == 0) {
+                if (vx < 0) {
                     std::cout << 0; //ans
                     return 0;
                 }
             }
 
-            if (way == 1) {
+            if (vx > 0) {
                 Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
                 for (int i = n_p + 1; i < X_per.size(); i++) {
 
@@ -180,7 +180,7 @@ int main(int argc,char** argv) {
                     return 0;
                 }
 
-                if (way == 1) {
+                if (vx > 0) {
                     std::cout << X_per.size(); //ans
                     return 0;
                 }
