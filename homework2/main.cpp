@@ -3,9 +3,10 @@
 #include <cmath>
 #include <string>
 #include <fstream>
+#include <typeinfo>
 
 std::vector<double> ReadFile(std::string File){
-
+    double x;
     std::vector<double> coords;
     std::vector<std::string> points;
 
@@ -13,23 +14,25 @@ std::vector<double> ReadFile(std::string File){
     fin.open(File);
 
     if (fin.is_open()){
-        std::string str;
+//        std::string str;
 
         while (!fin.eof()) {
-            str = "";
-            fin >> str;
-            points.push_back(str);
+//            str = "";
+//            fin >> str;
+            fin >> x;
+            coords.push_back(x);
+//            std::cout << "X = " << typeid(x).name() << std::endl;
         }
     }
 
     fin.close();
 
-    for (int i; i< points.size(); i++){
-
-        std::string b = points[i];
-        double a = strtod(b.c_str(), nullptr);
-        coords.push_back(a);
-    }
+//    for (int i; i< points.size(); i++){
+//
+//        std::string b = points[i];
+//        double a = strtod(b.c_str(), nullptr);
+//        coords.push_back(a);
+//    }
 
     return coords;
 }
@@ -60,7 +63,7 @@ double recurs(std::vector<double> X, double n){
 }
 
 //Функция, возвращающая координату Y параболы в различных точках X
-std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,double g,int n, std::vector<double> recX){
+std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,double g,double n, std::vector<double> recX){
     std::vector<double> Y;
 
     for(int i = 0; i < X.size(); i++){
@@ -72,12 +75,12 @@ std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,
 
 
 
-int main(int argc,char** argv) {
+int main() {
 
-    if (argc == 2) {
+    if (true) {
 //        std::cout << "1st argument: " << argv[1] << std::endl;
 
-        std::vector<double> ALL = ReadFile(argv[1]);
+        std::vector<double> ALL = ReadFile("test5_103.txt");
 
         double h = ALL[0];
         double vx = ALL[1];
@@ -124,6 +127,7 @@ int main(int argc,char** argv) {
         }
 
         if (way == 1) {
+//            std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
             std::cout << X_per.size(); //ans
             return 0;
         }
@@ -149,11 +153,13 @@ int main(int argc,char** argv) {
                 }
 
                 if (Y_true[n_p] < 0) {
+//                    std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
                     std::cout << n_p + 1; //ans
                     return 0;
                 }
 
                 if (way == 0) {
+//                    std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
                     std::cout << 0; //ans
                     return 0;
                 }
@@ -176,11 +182,13 @@ int main(int argc,char** argv) {
                 }
 
                 if (Y_true[n_p] < 0) {
+//                    std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
                     std::cout << n_p; //ans
                     return 0;
                 }
 
                 if (way == 1) {
+//                    std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
                     std::cout << X_per.size(); //ans
                     return 0;
                 }
