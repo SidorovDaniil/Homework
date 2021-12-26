@@ -72,12 +72,12 @@ std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,
 
 
 
-int main(int argc,char** argv) {
+int main() {
 
-    if (argc == 2) {
+    if (true) {
 //        std::cout << "1st argument: " << argv[1] << std::endl;
 
-        std::vector<double> ALL = ReadFile(argv[1]);
+        std::vector<double> ALL = ReadFile("test3_0.txt");
 
         double h = ALL[0];
         double vx = ALL[1];
@@ -154,7 +154,7 @@ int main(int argc,char** argv) {
                 }
 
                 if (vx < 0) {
-                    std::cout << 0; //ans
+                    std::cout << 10; //ans
                     return 0;
                 }
             }
