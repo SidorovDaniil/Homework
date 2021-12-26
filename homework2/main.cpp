@@ -75,12 +75,12 @@ std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,
 
 
 
-int main() {
+int main(int argc,char** argv) {
 
-    if (true) {
+    if (argc == 2) {
 //        std::cout << "1st argument: " << argv[1] << std::endl;
 
-        std::vector<double> ALL = ReadFile("test5_103.txt");
+        std::vector<double> ALL = ReadFile(argv[1]);
 
         double h = ALL[0];
         double vx = ALL[1];
