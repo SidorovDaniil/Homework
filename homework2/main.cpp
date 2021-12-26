@@ -89,7 +89,7 @@ int main(int argc,char** argv) {
         ALL.erase(ALL.begin() + 0);
         ALL.erase(ALL.begin() + 0);
 
-        double way = 1;//начальное направление движения
+        int way = 1;//начальное направление движения
 
         int n = 0;//счетчик для рекурсии
         int n_p = 0;// Номер перегородки от которой мы отразились
@@ -123,7 +123,7 @@ int main(int argc,char** argv) {
             }
         }
 
-        if (way == 1.) {
+        if (way == 1) {
             std::cout << X_per.size(); //ans
             return 0;
         }
