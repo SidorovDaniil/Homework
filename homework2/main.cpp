@@ -123,7 +123,7 @@ int main(int argc,char** argv) {
             }
         }
 
-        if (way == 1) {
+        if (vx > 0) {
             std::cout << X_per.size(); //ans
             return 0;
         }
