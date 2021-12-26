@@ -72,12 +72,12 @@ std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,
 
 
 
-int main() {
+int main(int argc,char** argv) {
 
-    if (true) {
+    if (argc == 2) {
 //        std::cout << "1st argument: " << argv[1] << std::endl;
 
-        std::vector<double> ALL = ReadFile("test2_1.txt");
+        std::vector<double> ALL = ReadFile(argv[1]);
 
         double h = ALL[0];
         double vx = ALL[1];
@@ -124,7 +124,6 @@ int main() {
         }
 
         if (way == 1.) {
-            std::cout << "Nachalo" << std::endl;
             std::cout << X_per.size(); //ans
             return 0;
         }
@@ -138,8 +137,8 @@ int main() {
                 for (int i = n_p - 1; i >= 0; i--) {
 
                     if (Y_true[i] <= Y_per[i]) {
-                        std::cout << "dvgalis vpravo";
-                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
+//                        std::cout << "dvgalis vpravo";
+//                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
                         n_p = i;
                         way = 1;
                         n++;
@@ -165,8 +164,8 @@ int main() {
                 for (int i = n_p + 1; i < X_per.size(); i++) {
 
                     if (Y_true[i] <= Y_per[i]) {
-                        std::cout << "dvgalis vpravo";
-                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
+//                        std::cout << "dvgalis vpravo";
+//                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
                         n_p = i;
                         way = 0;
                         n++;
