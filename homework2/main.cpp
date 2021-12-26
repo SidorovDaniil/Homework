@@ -24,7 +24,7 @@ std::vector<double> ReadFile(std::string File){
 
     fin.close();
 
-    for (int i; i< points.size(); i++){
+    for (int i = 0; i< points.size(); i++){
 
         std::string b = points[i];
         double a = strtod(b.c_str(), nullptr);
@@ -38,7 +38,7 @@ std::vector<double> XorY(std::vector<double> coords,int name_of_axis){
 
     std::vector<double> axis;
 
-    for (int i; i< coords.size()/2; i++){
+    for (int i = 0; i< coords.size()/2; i++){
 
         if(name_of_axis == 1){              // 1 is equal x
             axis.push_back(coords[2*i]);
