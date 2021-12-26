@@ -3,7 +3,7 @@
 #include <cmath>
 #include <string>
 #include <fstream>
-
+#include <typeinfo>
 std::vector<double> ReadFile(std::string File){
 
     std::vector<double> coords;
@@ -124,6 +124,7 @@ int main(int argc,char** argv) {
         }
 
         if (vx > 0) {
+            std::cout << typeid(X_per.size()).name()   << std::endl;
             std::cout << X_per.size(); //ans
             return 0;
         }
@@ -131,9 +132,65 @@ int main(int argc,char** argv) {
 //        std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
 //        std::cout << "new vx";
 //        std::cout << "new Left = 0 and rght = 1";
-//        while (true) {
-//
-//        }
+        while (true) {
+            if (vx < 0) {
+                Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
+                for (int i = n_p - 1; i >= 0; i--) {
+
+                    if (Y_true[i] <= Y_per[i]) {
+//                        std::cout << "dvgalis vpravo";
+//                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
+                        n_p = i;
+                        way = 1;
+                        n++;
+                        X_rec.push_back(X_per[i]);
+                        vx = -vx;
+                        break;
+                    }
+                }
+
+                if (Y_true[n_p] < 0) {
+                    std::cout << typeid(n_p + 1).name()   << std::endl;
+                    std::cout << n_p + 1; //ans
+                    return 0;
+                }
+
+                if (vx < 0) {
+                    std::cout << typeid(0).name()   << std::endl;
+                    std::cout << 0; //ans
+                    return 0;
+                }
+            }
+
+            if (vx > 0) {
+                Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
+                for (int i = n_p + 1; i < X_per.size(); i++) {
+
+                    if (Y_true[i] <= Y_per[i]) {
+//                        std::cout << "dvgalis vpravo";
+//                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
+                        n_p = i;
+                        way = 0;
+                        n++;
+                        X_rec.push_back(X_per[i]);
+                        vx = -vx;
+                        break;
+                    }
+                }
+
+                if (Y_true[n_p] < 0) {
+                    std::cout << typeid(n_p).name()   << std::endl;
+                    std::cout << n_p; //ans
+                    return 0;
+                }
+
+                if (vx > 0) {
+                    std::cout << typeid(X_per.size()).name()   << std::endl;
+                    std::cout << X_per.size(); //ans
+                    return 0;
+                }
+            }
+        }
 
 //    } else {
 //        std::cerr << "No file" << std::endl;
