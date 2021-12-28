@@ -1,16 +1,14 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include <string>
 #include <fstream>
 
-std::vector<double> ReadFile(std::string File, int mode, int name_of_ax){ //mode = 1 --> h,vx,vy; mode = 2 --> coords
-
-    std::vector<double> coordsx;
-    std::vector<double> coordsy;
+std::vector<double> ReadFile(std::string File, int mode){ //mode = 1 --> h,vx,vy; mode = 2 --> coords
+    std::vector<double> coords;
     std::vector<double> param;
     std::ifstream fin;
     fin.open(File);
-
     if (fin.is_open()){
         double point;
         double p;
@@ -22,30 +20,35 @@ std::vector<double> ReadFile(std::string File, int mode, int name_of_ax){ //mode
             }
         }
 
-        if(mode == 1){
-            fin.close();
-            return param;
-        }
-
         while (!fin.eof()) {
-            fin >> point;
-            coordsx.push_back(point);
+
+            if(mode == 1){
+                fin.close();
+                return param;
+            }
 
             fin >> point;
-            coordsy.push_back(point);
+            coords.push_back(point);
         }
     }
-
     fin.close();
-
-    if(name_of_ax == 1){
-        return coordsx;
-    }
-    else{
-        return coordsy;
-    }
+    return coords;
 }
 
+std::vector<double> XorY(std::vector<double> coords,int name_of_axis){
+
+    std::vector<double> axis;
+
+    for (int i = 0; i< coords.size()/2; i++){
+        if(name_of_axis == 1){              // 1 is equal x
+            axis.push_back(coords[2*i]);
+        }
+        else{                               // 2,3... is equal y
+            axis.push_back(coords[2*i+1]);
+        }
+    }
+    return axis;
+}
 double recurs(std::vector<double> X, int n){
     if (n == 0) {
         return 0;
@@ -54,7 +57,6 @@ double recurs(std::vector<double> X, int n){
         return 2 * X[n-1] - recurs(X, n - 1);
     }
 }
-
 //Функция, возвращающая координату Y параболы в различных точках X
 std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,double g,int n, std::vector<double> recX){
 
@@ -68,11 +70,14 @@ std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,
     return Y;
 }
 
-int main(int argc,char** argv) {
+int main() {
 
-    if (argc == 2) {
+    if (true) {
+//        std::cout << "1st argument: " << argv[1] << std::endl;
 
-        std::vector<double> param = ReadFile(argv[1],1,0); //параметры системы
+        std::vector<double> param = ReadFile("test5_103.txt",1);
+        std::vector<double> ALL = ReadFile("test5_103.txt",2);
+
         std::vector<double> Y_true;// Y координата мячика
         std::vector<double> Y_per;//Y координата перегородки
         std::vector<double> X_per;//X координата перегородки
@@ -86,14 +91,8 @@ int main(int argc,char** argv) {
         int n = 0;//счетчик для рекурсии
         int n_p = 0;// Номер перегородки от которой мы отразились
 
-        X_per = ReadFile(argv[1],2,1);
-        Y_per =  ReadFile(argv[1],2,2);
-
-        if(X_per.empty() || Y_per.empty()){
-            std::cout << 0;
-            return 0;
-        }
-
+        X_per = XorY(ALL, 1);
+        Y_per = XorY(ALL, 2);
         Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
 
         //Первое столкновение
@@ -114,9 +113,10 @@ int main(int argc,char** argv) {
 
         while (true) {
             if (vx < 0) {
-                Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
-                for (int i = n_p - 1; i >= 0; i--) {
 
+                Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
+
+                for (int i = n_p - 1; i >= 0; i--) {
                     if (Y_true[i] <= Y_per[i]) {
                         n_p = i;
                         n++;
@@ -138,9 +138,10 @@ int main(int argc,char** argv) {
             }
 
             if (vx > 0) {
-                Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
-                for (int i = n_p + 1; i < X_per.size(); i++) {
 
+                Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
+
+                for (int i = n_p + 1; i < X_per.size(); i++) {
                     if (Y_true[i] <= Y_per[i]) {
                         n_p = i;
                         n++;
