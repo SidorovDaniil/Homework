@@ -4,25 +4,37 @@
 #include <string>
 #include <fstream>
 
-std::vector<double> ReadFile(std::string File){
+std::vector<double> ReadFile(std::string File, int mode){ //mode = 1 --> h,vx,vy; mode = 2 --> coords
 
     std::vector<double> coords;
-    std::vector<std::string> points;
-
+    std::vector<double> param;
     std::ifstream fin;
     fin.open(File);
 
     if (fin.is_open()){
         double point;
+        double p;
+
+        if(!fin.eof()){
+            for(int i = 0; i < 3; i++){
+                fin >> p;
+                param.push_back(p);
+            }
+        }
 
         while (!fin.eof()) {
+            if(mode == 1){
+                fin.close();
+                return param;
+            }
+
             fin >> point;
             coords.push_back(point);
         }
     }
 
     fin.close();
-    
+
     return coords;
 }
 
@@ -54,34 +66,30 @@ double recurs(std::vector<double> X, int n){
 //Функция, возвращающая координату Y параболы в различных точках X
 std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,double g,int n, std::vector<double> recX){
     std::vector<double> Y;
-
+    double b = recurs(recX,n);
     for(int i = 0; i < X.size(); i++){
-        double a = h + (X[i]-recurs(recX,n))*vy/vx - pow((X[i]-recurs(recX,n)),2)*g/(2*pow(vx,2));
+        double a = h + (X[i] - b) * vy / vx - (X[i] - b) * (X[i] - b) * g / (2 * vx * vx);
         Y.push_back(a);
     }
     return Y;
 }
 
+int main() {
 
-
-int main(int argc,char** argv) {
-
-    if (argc == 2) {
+    if (true) {
 //        std::cout << "1st argument: " << argv[1] << std::endl;
 
-        std::vector<double> ALL = ReadFile(argv[1]);
+        std::vector<double> param = ReadFile("test5_103.txt",1);
+        std::vector<double> ALL = ReadFile("test5_103.txt",2);
 
-        double h = ALL[0];
-        double vx = ALL[1];
-        double vy = ALL[2];
+        double h = param[0];
+        double vx = param[1];
+        double vy = param[2];
         double g = 9.81;
-
-//        std::cout << "h = " << h << " vx = " << vx << " vy = " << vy << std::endl;
-        ALL.erase(ALL.begin() + 0);
-        ALL.erase(ALL.begin() + 0);
-        ALL.erase(ALL.begin() + 0);
-
-        int way = 1;//начальное направление движения
+//        std::cout << ALL[0] << " " << ALL[1] << " " << ALL[2];
+//        ALL.erase(ALL.begin() + 0);
+//        ALL.erase(ALL.begin() + 0);
+//        ALL.erase(ALL.begin() + 0);
 
         int n = 0;//счетчик для рекурсии
         int n_p = 0;// Номер перегородки от которой мы отразились
@@ -94,20 +102,13 @@ int main(int argc,char** argv) {
         X_per = XorY(ALL, 1);
         Y_per = XorY(ALL, 2);
 
-//        for (int i = 0; i<X_per.size();i++){
-//            std::cout << "X_per= " << X_per[i] << "Y_per = " << Y_per[i] << std::endl;
-//        }
 
-        for (int i = 0; i < X_per.size(); i++) {
-//            std:: cout <<"coords X and Y is (" << X_per[i] << ", " << coords(X_per,vx,vy,h,g,n,X_rec)[i]<< ")" <<std::endl;
-            Y_true.push_back(coords(X_per, vx, vy, h, g, n, X_rec)[i]);
-        }
+        Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
 
         //Первое столкновение
         for (int i = 0; i < X_per.size(); i++) {
             if (Y_true[i] < Y_per[i]) {
                 n_p = i;
-                way = 0;
                 n++;
                 X_rec.push_back(X_per[i]);
                 vx = -vx;
@@ -120,19 +121,13 @@ int main(int argc,char** argv) {
             return 0;
         }
 
-//        std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
-//        std::cout << "new vx";
-//        std::cout << "new Left = 0 and rght = 1";
         while (true) {
             if (vx < 0) {
                 Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
                 for (int i = n_p - 1; i >= 0; i--) {
 
                     if (Y_true[i] <= Y_per[i]) {
-//                        std::cout << "dvgalis vpravo";
-//                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
                         n_p = i;
-                        way = 1;
                         n++;
                         X_rec.push_back(X_per[i]);
                         vx = -vx;
@@ -156,10 +151,7 @@ int main(int argc,char** argv) {
                 for (int i = n_p + 1; i < X_per.size(); i++) {
 
                     if (Y_true[i] <= Y_per[i]) {
-//                        std::cout << "dvgalis vpravo";
-//                        std::cout << "Coords of parabola Y " << Y_true[i] << " coords of peregorodok is" << Y_per[i] <<std::endl;
                         n_p = i;
-                        way = 0;
                         n++;
                         X_rec.push_back(X_per[i]);
                         vx = -vx;
@@ -178,11 +170,5 @@ int main(int argc,char** argv) {
                 }
             }
         }
-
-//    } else {
-//        std::cerr << "No file" << std::endl;
-//        return 1;
-//    }
-//    std::cout << "n_p = " << n_p << " Y(n_p) = " << Y_true[n_p] << " way is " << way << " X_rec " << X_rec[n_p] << std::endl;
     }
 }
