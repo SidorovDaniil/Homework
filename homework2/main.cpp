@@ -70,19 +70,19 @@ std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,
     return Y;
 }
 
-int main() {
+int main(int argc,char** argv) {
 
-    if (true) {
+    if (argc == 2) {
 //        std::cout << "1st argument: " << argv[1] << std::endl;
 
-        std::vector<double> param = ReadFile("test5_103.txt",1);
-        std::vector<double> ALL = ReadFile("test5_103.txt",2);
+        std::vector<double> param = ReadFile(argv[1],1);
+        std::vector<double> ALL = ReadFile(argv[1],2);
 
         std::vector<double> Y_true;// Y координата мячика
         std::vector<double> Y_per;//Y координата перегородки
         std::vector<double> X_per;//X координата перегородки
         std::vector<double> X_rec;//X координата перегородок, от которых мячик отразися
-
+        
         double h = param[0];
         double vx = param[1];
         double vy = param[2];
