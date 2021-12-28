@@ -68,11 +68,11 @@ std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,
     return Y;
 }
 
-int main() {
+int main(int argc,char** argv) {
 
-    if (true) {
+    if (argc == 2) {
 
-        std::vector<double> param = ReadFile("test4_0.txt",1,0); //параметры системы
+        std::vector<double> param = ReadFile(argv[1],1,0); //параметры системы
         std::vector<double> Y_true;// Y координата мячика
         std::vector<double> Y_per;//Y координата перегородки
         std::vector<double> X_per;//X координата перегородки
@@ -86,8 +86,8 @@ int main() {
         int n = 0;//счетчик для рекурсии
         int n_p = 0;// Номер перегородки от которой мы отразились
 
-        X_per = ReadFile("test4_0.txt",2,1);
-        Y_per =  ReadFile("test4_0.txt",2,2);
+        X_per = ReadFile(argv[1],2,1);
+        Y_per =  ReadFile(argv[1],2,2);
 
         if(X_per.empty() || Y_per.empty()){
             std::cout << 0;
