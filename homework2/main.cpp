@@ -4,9 +4,10 @@
 #include <string>
 #include <fstream>
 
-std::vector<double> ReadFile(std::string File, int mode){ //mode = 1 --> h,vx,vy; mode = 2 --> coords
+std::vector<double> ReadFile(std::string File, int mode, int name_of_ax){ //mode = 1 --> h,vx,vy; mode = 2 --> coords
 
-    std::vector<double> coords;
+    std::vector<double> coordsx;
+    std::vector<double> coordsy;
     std::vector<double> param;
     std::ifstream fin;
     fin.open(File);
@@ -22,36 +23,28 @@ std::vector<double> ReadFile(std::string File, int mode){ //mode = 1 --> h,vx,vy
             }
         }
 
+        if(mode == 1){
+            fin.close();
+            return param;
+        }
+
         while (!fin.eof()) {
-            if(mode == 1){
-                fin.close();
-                return param;
-            }
+            fin >> point;
+            coordsx.push_back(point);
 
             fin >> point;
-            coords.push_back(point);
+            coordsy.push_back(point);
         }
     }
 
     fin.close();
 
-    return coords;
-}
-
-std::vector<double> XorY(std::vector<double> coords,int name_of_axis){
-
-    std::vector<double> axis;
-
-    for (int i = 0; i< coords.size()/2; i++){
-
-        if(name_of_axis == 1){              // 1 is equal x
-            axis.push_back(coords[2*i]);
-        }
-        else{                               // 2,3... is equal y
-            axis.push_back(coords[2*i+1]);
-        }
+    if(name_of_ax == 1){
+        return coordsx;
     }
-    return axis;
+    else{
+        return coordsy;
+    }
 }
 
 double recurs(std::vector<double> X, int n){
@@ -65,8 +58,10 @@ double recurs(std::vector<double> X, int n){
 
 //Функция, возвращающая координату Y параболы в различных точках X
 std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,double g,int n, std::vector<double> recX){
+
     std::vector<double> Y;
     double b = recurs(recX,n);
+
     for(int i = 0; i < X.size(); i++){
         double a = h + (X[i] - b) * vy / vx - (X[i] - b) * (X[i] - b) * g / (2 * vx * vx);
         Y.push_back(a);
@@ -77,31 +72,23 @@ std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,
 int main(int argc,char** argv) {
 
     if (argc == 2) {
-//        std::cout << "1st argument: " << argv[1] << std::endl;
 
-        std::vector<double> param = ReadFile(argv[1],1);
-        std::vector<double> ALL = ReadFile(argv[1],2);
-
-        double h = param[0];
-        double vx = param[1];
-        double vy = param[2];
-        double g = 9.81;
-//        std::cout << ALL[0] << " " << ALL[1] << " " << ALL[2];
-//        ALL.erase(ALL.begin() + 0);
-//        ALL.erase(ALL.begin() + 0);
-//        ALL.erase(ALL.begin() + 0);
-
-        int n = 0;//счетчик для рекурсии
-        int n_p = 0;// Номер перегородки от которой мы отразились
-
+        std::vector<double> param = ReadFile(argv[1],1,0); //параметры системы
         std::vector<double> Y_true;// Y координата мячика
         std::vector<double> Y_per;//Y координата перегородки
         std::vector<double> X_per;//X координата перегородки
         std::vector<double> X_rec;//X координата перегородок, от которых мячик отразися
 
-        X_per = XorY(ALL, 1);
-        Y_per = XorY(ALL, 2);
+        double h = param[0];
+        double vx = param[1];
+        double vy = param[2];
+        double g = 9.81;
 
+        int n = 0;//счетчик для рекурсии
+        int n_p = 0;// Номер перегородки от которой мы отразились
+
+        X_per = ReadFile(argv[1],2,1);
+        Y_per =  ReadFile(argv[1],2,2);
 
         Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
 
