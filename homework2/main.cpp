@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <cmath>
 #include <string>
 #include <fstream>
 
@@ -69,11 +68,11 @@ std::vector<double> coords(std::vector<double> X,double vx, double vy, double h,
     return Y;
 }
 
-int main(int argc,char** argv) {
+int main() {
 
-    if (argc == 2) {
+    if (true) {
 
-        std::vector<double> param = ReadFile(argv[1],1,0); //параметры системы
+        std::vector<double> param = ReadFile("test4_0.txt",1,0); //параметры системы
         std::vector<double> Y_true;// Y координата мячика
         std::vector<double> Y_per;//Y координата перегородки
         std::vector<double> X_per;//X координата перегородки
@@ -87,8 +86,13 @@ int main(int argc,char** argv) {
         int n = 0;//счетчик для рекурсии
         int n_p = 0;// Номер перегородки от которой мы отразились
 
-        X_per = ReadFile(argv[1],2,1);
-        Y_per =  ReadFile(argv[1],2,2);
+        X_per = ReadFile("test4_0.txt",2,1);
+        Y_per =  ReadFile("test4_0.txt",2,2);
+
+        if(X_per.empty() || Y_per.empty()){
+            std::cout << 0;
+            return 0;
+        }
 
         Y_true = coords(X_per, vx, vy, h, g, n, X_rec);
 
