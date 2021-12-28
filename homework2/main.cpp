@@ -22,17 +22,7 @@ std::vector<double> ReadFile(std::string File){
     }
 
     fin.close();
-
-<<<<<<< HEAD
-=======
-    for (int i = 0; i< points.size(); i++){
-
-        std::string b = points[i];
-        double a = strtod(b.c_str(), nullptr);
-        coords.push_back(a);
-    }
-
->>>>>>> d8b379c9e4d1451dd80460e00767bb807ec98514
+    
     return coords;
 }
 
